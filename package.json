@@ -10,19 +10,20 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:arklet-plugin.executeWithTsx"
+    "workspaceContains:package.json"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "arklet-plugin.executeWithTsx",
-        "title": "Arklet: Execute with TSX"
+        "title": "Arklet"
       }
     ],
     "menus": {
       "explorer/context": [
         {
+          "when": "(resourceExtname == .ts || resourceExtname == .js) && arkletEnabled",
           "command": "arklet-plugin.executeWithTsx",
           "group": "navigation"
         }
