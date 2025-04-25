@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
         // 创建输出通道，用于显示详细信息
         const outputChannel = vscode.window.createOutputChannel('Arklet');
         outputChannel.show();
-        outputChannel.appendLine(`开始执行文件: ${filePath}`);
+        outputChannel.appendLine(`开始执行文件: ${filePath}\n`);
         
         // 检查 tsx 是否安装
         exec('tsx --version', (error: any) => {
@@ -71,21 +71,21 @@ export function activate(context: vscode.ExtensionContext) {
             
             // 在文件目录下执行 tsx 命令
             const command = `cd "${fileDir}" && tsx "${filePath}"`;
-            outputChannel.appendLine(`执行命令: ${command}`);
+            outputChannel.appendLine(`执行命令: ${command}\n`);
             
             exec(command, { cwd: fileDir }, (error: any, stdout: string, stderr: string) => {
                 if (error) {
-                    outputChannel.appendLine(`执行错误: ${error.message}`);
+                    outputChannel.appendLine(`执行错误: ${error.message}\n`);
                     vscode.window.showErrorMessage(`执行失败: ${fileName}`);
                     return;
                 }
                 
                 if (stderr) {
-                    outputChannel.appendLine(`错误输出: ${stderr}`);
+                    outputChannel.appendLine(`错误输出: ${stderr}\n`);
                 }
                 
                 if (stdout) {
-                    outputChannel.appendLine(`标准输出:\n${stdout}`);
+                    outputChannel.appendLine(`标准输出:\n${stdout}\n`);
                 }
                 
                 // 检查是否创建了 response.json 文件
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
                         const fileSizeKB = Math.round(stats.size / 1024 * 10) / 10;
                         
                         resultMessage += ` (已生成 response.json, ${fileSizeKB}KB)`;
-                        outputChannel.appendLine(`已创建文件: ${responseFilePath} (${fileSizeKB}KB)`);
+                        outputChannel.appendLine(`已创建文件: ${responseFilePath} (${fileSizeKB}KB)\n`);
                     }
                 } catch (err) {
                     // 忽略文件检查错误
